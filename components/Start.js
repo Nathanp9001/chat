@@ -1,16 +1,27 @@
 import { useState } from 'react';
 import { StyleSheet, View, Text, Button, TextInput, ImageBackground, TouchableOpacity } from "react-native";
 
+const backgroundColors = {
+  black: { backgroundColor: "#2f2f2f" },
+   purple: { backgroundColor: "#9A8CA9" },
+   grey: { backgroundColor: "#708090" },
+   green: { backgroundColor: "#8fbc8f" },
+};
+
 const Start = ({ navigation }) => {
-  const [name, setName] = useState('');
+  const [name, setName, color, backgroundColor] = useState('');
+
+const { black, purple, grey, green } = backgroundColors;
 
   return(
+    
     <View style={styles.container}>
       <ImageBackground
         source={require('../images/Background-Image.png')}
         resizeMode='cover'
         style={[styles.container, styles.image]}
       >
+        <Text style={styles.title}>Chat</Text>
         <View style={styles.menu}>
           <TextInput
             style={styles.textInput}
@@ -21,13 +32,19 @@ const Start = ({ navigation }) => {
           <Text>Choose Background Color:</Text>
           <View style={styles.colorSelector}>
             <TouchableOpacity 
-              style={[styles.color, styles.black]}
+              style={[
+                styles.color, 
+                styles.black,
+                this.state.color === black.backgroundColor
+                ? styles.selectedColor
+                : {}
+              ]}
+              onPress={() =>
+              this.setState({ color: black.backgroundColor})
+              }
             />
             <TouchableOpacity 
               style={[styles.color, styles.purple,]}
-              onPress={() =>
-              this.setState({ color: black})
-              }
             />
             <TouchableOpacity 
               style={[styles.color, styles.grey]}
@@ -39,10 +56,14 @@ const Start = ({ navigation }) => {
           <TouchableOpacity
             style={styles.chatButton}
             title="Start Chatting"
-            onPress={() => navigation.navigate('Chat', { name: name, color: this.state.color})}
-          />
+            onPress={() => navigation.navigate('Chat', { name: name, color: color})}
+          >
+            <Text style={styles.chatButtonText}>
+              Start Chatting
+            </Text>
+          </TouchableOpacity>
         </View>
-        <Text style={styles.title}>Chat</Text>
+        
       </ImageBackground>
     </View>
   );
@@ -51,13 +72,13 @@ const Start = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column-reverse',
+    flexDirection: 'column',
     alignItems: 'center',
   },
   title: {
     fontSize: 100,
     color: '#f5f5f5',
-    marginVertical: 150,
+    marginVertical: 120,
   },
   image: {
     width: '100%'
@@ -67,7 +88,6 @@ const styles = StyleSheet.create({
     height: '44%',
     width: '88%',
     alignItems: 'center',
-    marginVertical: 25,
   },
   textInput: {
     width: '88%',
@@ -85,8 +105,6 @@ const styles = StyleSheet.create({
   colorSelector: {
     flex: 1,
     flexDirection: 'row',
-    borderColor: 'red',
-    borderWidth: 1,
     height: 10,
   },
   color: {
@@ -95,6 +113,11 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     marginHorizontal: 10,
     marginVertical: 20,
+  },
+  selectedColor: {
+    borderStyle: 'solid',
+    borderWidth: 2,
+    borderColor: '#708090',
   },
   black: {
     backgroundColor: '#2f2f2f',
@@ -111,9 +134,14 @@ const styles = StyleSheet.create({
   chatButton: {
     backgroundColor: '#9A8CA9',
     width: '88%',
-    height: 40,
+    height: 60,
     justifyContent: 'center',
     marginVertical: 20,
+    alignItems: 'center',
+  },
+  chatButtonText: {
+    color: '#f5f5f5',
+    fontSize: 25,
   }
 });
 
