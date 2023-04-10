@@ -9,9 +9,9 @@ const backgroundColors = {
 };
 
 const Start = ({ navigation }) => {
-  const [name, setName, color, backgroundColor] = useState('');
-
-const { black, purple, grey, green } = backgroundColors;
+  const [name, setName] = useState('');
+  const [color, setColor] = useState('');
+  const { black, purple, grey, green } = backgroundColors;
 
   return(
     
@@ -32,25 +32,28 @@ const { black, purple, grey, green } = backgroundColors;
           <Text>Choose Background Color:</Text>
           <View style={styles.colorSelector}>
             <TouchableOpacity 
-              style={[
-                styles.color, 
-                styles.black,
-                this.state.color === black.backgroundColor
-                ? styles.selectedColor
-                : {}
-              ]}
+              style={[styles.color, styles.black]}
               onPress={() =>
-              this.setState({ color: black.backgroundColor})
+              setColor(black.backgroundColor)
               }
             />
             <TouchableOpacity 
               style={[styles.color, styles.purple,]}
+              onPress={() =>
+                setColor(purple.backgroundColor)
+              }
             />
             <TouchableOpacity 
               style={[styles.color, styles.grey]}
+              onPress={() =>
+                setColor(grey.backgroundColor)
+              }
             />
             <TouchableOpacity 
               style={[styles.color, styles.green]}
+              onPress={() =>
+                setColor(green.backgroundColor)
+              }
             />
           </View>
           <TouchableOpacity
