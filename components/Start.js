@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { StyleSheet, View, Text, Button, TextInput, ImageBackground, TouchableOpacity } from "react-native";
 
+// background colors for chat screen
 const backgroundColors = {
   black: { backgroundColor: "#2f2f2f" },
    purple: { backgroundColor: "#9A8CA9" },
@@ -23,12 +24,16 @@ const Start = ({ navigation }) => {
       >
         <Text style={styles.title}>Chat</Text>
         <View style={styles.menu}>
+
+           {/* text box for user's name */}
           <TextInput
             style={styles.textInput}
             value={name}
             onChangeText={setName}
             placeholder='Type your username here'
           />
+
+          {/* selector for background color on chat screen */}
           <Text>Choose Background Color:</Text>
           <View style={styles.colorSelector}>
             <TouchableOpacity 
@@ -56,6 +61,8 @@ const Start = ({ navigation }) => {
               }
             />
           </View>
+
+          {/* brings user to chat screen */}
           <TouchableOpacity
             style={styles.chatButton}
             title="Start Chatting"
@@ -65,6 +72,7 @@ const Start = ({ navigation }) => {
               Start Chatting
             </Text>
           </TouchableOpacity>
+          {Platform.OS === "ios"?<KeyboardAvoidingView behavior="padding" />: null}
         </View>
         
       </ImageBackground>
