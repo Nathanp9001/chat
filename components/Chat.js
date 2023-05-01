@@ -2,32 +2,27 @@ import { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, KeyboardAvoidingView, Platform } from 'react-native';
 import { Bubble, GiftedChat } from 'react-native-gifted-chat';
 
-const Chat = ({ route, navigation }) => {
+const Chat = ({ route, navigation, db }) => {
   const { name, color } = route.params;
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     navigation.setOptions({ title: name });
-
-    // default messages
-    setMessages([
-      {
-        _id: 1,
-        text: "Hello developer",
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: "React Native",
-          avatar: "https://placeimg.com/140/140/any",
-        },
-      },
-      {
-        _id: 2,
-        text: 'This is a system message',
-        createdAt: new Date(),
-        system: true,
-      },
-    ]);
+    const q = query(collection(db, 'messages'), orderBy('createdAt', 'desc'));
+    const unsubMessages = onSnapshot(q, (docs) => {
+    let newMessages = [];
+    docs.forEach(doc => {
+    newMessages.push({
+      id: doc.id,
+      ...doc.data(),
+      createdAt: new Date(doc.data().createdAt.toMillis())
+      })
+    })
+    setMessages(newMessages);
+    })
+    return () => {
+    if (unsubMessages) unsubMessages();
+    }
   }, []);
 
   const onSend = (newMessages) => {
