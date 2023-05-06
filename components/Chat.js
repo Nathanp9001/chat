@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, KeyboardAvoidingView, Platform } from 'react-native';
 import { Bubble, GiftedChat } from 'react-native-gifted-chat';
+import { query, collection, orderBy, onSnapshot } from "firebase/firestore";
 
 const Chat = ({ route, navigation, db }) => {
-  const { name, color } = route.params;
+  const { name, color, userID } = route.params;
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
@@ -13,7 +14,7 @@ const Chat = ({ route, navigation, db }) => {
     let newMessages = [];
     docs.forEach(doc => {
     newMessages.push({
-      id: doc.id,
+      _id: doc.id,
       ...doc.data(),
       createdAt: new Date(doc.data().createdAt.toMillis())
       })
@@ -51,7 +52,7 @@ const Chat = ({ route, navigation, db }) => {
         renderBubble={renderBubble}
         onSend={messages => onSend(messages)}
         user={{
-          _id: 1
+          _id: userID
         }}
       />
       { Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null }
