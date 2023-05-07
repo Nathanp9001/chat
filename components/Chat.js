@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, KeyboardAvoidingView, Platform } from 'react-native';
 import { Bubble, GiftedChat } from 'react-native-gifted-chat';
-import { query, collection, orderBy, onSnapshot } from "firebase/firestore";
+import { query, collection, orderBy, onSnapshot, addDoc } from "firebase/firestore";
 
 const Chat = ({ route, navigation, db }) => {
   const { name, color, userID } = route.params;
@@ -27,7 +27,7 @@ const Chat = ({ route, navigation, db }) => {
   }, []);
 
   const onSend = (newMessages) => {
-    setMessages(previousMessages => GiftedChat.append(previousMessages, newMessages))
+    addDoc(collection(db, "messages"), newMessages[0])
   }
 
   // change appearance of chat bubbles
@@ -52,7 +52,8 @@ const Chat = ({ route, navigation, db }) => {
         renderBubble={renderBubble}
         onSend={messages => onSend(messages)}
         user={{
-          _id: userID
+          _id: userID,
+          name: name
         }}
       />
       { Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null }
