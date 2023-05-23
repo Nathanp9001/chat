@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, KeyboardAvoidingView, Platform } from 'react-native';
-import { Bubble, GiftedChat } from 'react-native-gifted-chat';
+import { Bubble, GiftedChat, InputToolBar } from 'react-native-gifted-chat';
 import { query, collection, orderBy, onSnapshot, addDoc } from "firebase/firestore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { CustomActions } from './CustomActions';
 
 
 const Chat = ({ route, navigation, db, isConnected }) => {
@@ -52,7 +53,15 @@ const Chat = ({ route, navigation, db, isConnected }) => {
 
   const onSend = (newMessages) => {
     addDoc(collection(db, "messages"), newMessages[0])
-  }
+  };
+
+  const renderInputToolbar = (props) => {
+    if (isConnected) {
+      return <InputToolbar {...props} />;
+    } else {
+      return null;
+    }
+  };
 
   // change appearance of chat bubbles
   const renderBubble = (props) => {
@@ -67,13 +76,18 @@ const Chat = ({ route, navigation, db, isConnected }) => {
         }
       }}
     />
-  }
+  };
+
+  const renderCustomActions = (props) => {
+    return <CustomActions {...props} />;
+  };
 
   return (
    <View style={[styles.container, {backgroundColor: color}]}>
      <GiftedChat
         messages={messages}
         renderBubble={renderBubble}
+        renderActions={renderCustomActions}
         onSend={messages => onSend(messages)}
         user={{
           _id: userID,
