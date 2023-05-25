@@ -3,11 +3,11 @@ import { StyleSheet, View, Text, KeyboardAvoidingView, Platform } from 'react-na
 import { Bubble, GiftedChat, InputToolbar } from 'react-native-gifted-chat';
 import { query, collection, orderBy, onSnapshot, addDoc } from "firebase/firestore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { CustomActions } from './CustomActions';
+import CustomActions from './CustomActions';
 import MapView from 'react-native-maps';
 
 
-const Chat = ({ route, navigation, db, isConnected }) => {
+const Chat = ({ route, navigation, db, isConnected, storage }) => {
   const { name, color, userID } = route.params;
   const [messages, setMessages] = useState([]);
 
