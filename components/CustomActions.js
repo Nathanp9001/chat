@@ -1,6 +1,7 @@
-import { TouchableOpacity, Text, View, StyleSheet } from "react-native";
+import { TouchableOpacity, Text, View, StyleSheet, Alert } from "react-native";
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import * as Location from 'expo-location';
+import * as ImagePicker from 'expo-image-picker';
 import MapView from 'react-native-maps';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
@@ -56,11 +57,11 @@ const CustomActions = ({ wrapperStyle, iconTextStyle, onSend, storage, userID })
     return `${userID}-${timeStamp}-${imageName}`;
   }
 
-  uploadBytes(newUploadRef, blob).then(async (snapshot) => {
-    console.log('file has been uploaded');
-    const imageURL = await getDownloadURL(snapshot.ref)
-    onSend({ image: imageURL })
-  });
+  // uploadBytes(newUploadRef, blob).then(async (snapshot) => {
+  //   console.log('file has been uploaded');
+  //   const imageURL = await getDownloadURL(snapshot.ref)
+  //   onSend({ image: imageURL })
+  // });
 
   const actionSheet = useActionSheet();
   const onActionPress = () => {
