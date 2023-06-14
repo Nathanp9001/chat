@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { StyleSheet, View, Text, Button, TextInput, ImageBackground, TouchableOpacity, Platform, Alert } from "react-native";
+import { StyleSheet, View, Text, Button, TextInput, ImageBackground, TouchableOpacity, Platform, Alert, KeyboardAvoidingView } from "react-native";
 import { getAuth, signInAnonymously } from 'firebase/auth';
 
 // background colors for chat screen
