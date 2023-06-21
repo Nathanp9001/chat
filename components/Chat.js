@@ -111,6 +111,7 @@ const Chat = ({ route, navigation, db, isConnected, storage }) => {
         renderBubble={renderBubble}
         renderInputToolbar={renderInputToolbar}
         renderActions={renderCustomActions}
+        renderCustomView={renderCustomView}
         onSend={messages => onSend(messages)}
         user={{
           _id: userID,
